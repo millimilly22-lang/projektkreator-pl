@@ -5,15 +5,16 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
-import nodemailer from 'nodemailer';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, '..');
 const PORT = Number(process.env.PORT || 5175);
 const PUBLIC_APP_URL = process.env.PUBLIC_APP_URL || 'http://localhost:5174';
-const OWNER_EMAIL = process.env.OWNER_EMAIL || process.env.SMTP_USER || 'liashany99@gmail.com';
+const OWNER_EMAIL = process.env.OWNER_EMAIL || 'liashany4@gmail.com';
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || OWNER_EMAIL;
+const RESEND_API_KEY = process.env.RESEND_API_KEY || '';
+const RESEND_FROM = process.env.RESEND_FROM || 'ProjektKreator.pl <onboarding@resend.dev>';
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'data');
 const STORE_PATH = path.join(DATA_DIR, 'requests.json');
 fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -35,29 +36,30 @@ function nextTicket() {
   const next = Number(store.seqByYear[year] || 0) + 1;
   store.seqByYear[year] = next;
   const ticket = `PK-${year}-${String(next).padStart(3,'0')}`;
-  return { store, year, next, ticket };
+  return { store, next, ticket };
 }
 
-let transporter = null;
-function getTransporter() {
-  if (transporter) return transporter;
-  if (!process.env.SMTP_HOST || !process.env.SMTP_USER || !process.env.SMTP_PASS) return null;
-  transporter = nodemailer.createTransport({
-    host: process.env.SMTP_HOST,
-    port: Number(process.env.SMTP_PORT || 465),
-    secure: String(process.env.SMTP_SECURE ?? 'true') === 'true',
-    auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS }
+async function sendResendEmail({ to, subject, html, replyTo, attachments=[] }) {
+  if (!RESEND_API_KEY) throw new Error('RESEND_API_KEY is not configured');
+  const payload = {
+    from: RESEND_FROM,
+    to: Array.isArray(to) ? to : [to],
+    subject,
+    html,
+    reply_to: replyTo,
+    attachments
+  };
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
   });
-  return transporter;
-}
-async function sendMail({ to, subject, html, replyTo, attachments=[] }) {
-  const tx = getTransporter();
-  if (!tx) return false;
-  await tx.sendMail({
-    from: process.env.SMTP_FROM || `ProjektKreator.pl <${process.env.SMTP_USER}>`,
-    to, subject, html, replyTo, attachments
-  });
-  return true;
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.message || `Resend error ${response.status}`);
+  return data;
 }
 
 const app = express();
@@ -69,7 +71,7 @@ const upload = multer({
   limits: { fileSize: 8 * 1024 * 1024, files: 5 }
 });
 
-app.get('/api/health', (_, res) => res.json({ ok:true, emailConfigured:!!getTransporter(), owner:CONTACT_EMAIL }));
+app.get('/api/health', (_, res) => res.json({ ok:true, emailConfigured:!!RESEND_API_KEY, provider:'resend', owner:CONTACT_EMAIL }));
 app.get('/api/settings/public', (_, res) => res.json({ settings: { email: CONTACT_EMAIL, company_name:'ProjektKreator.pl', website: PUBLIC_APP_URL } }));
 
 app.post('/api/requests', upload.array('files', 5), async (req, res) => {
@@ -82,6 +84,7 @@ app.post('/api/requests', upload.array('files', 5), async (req, res) => {
     const message = clean(body.message || body.description);
     if (!name || !email || !message) return res.status(400).json({ error:'Podaj imię, e-mail i treść zgłoszenia.' });
     if (!/^\S+@\S+\.\S+$/.test(email)) return res.status(400).json({ error:'Podaj poprawny adres e-mail.' });
+    if (!RESEND_API_KEY) return res.status(503).json({ error:'Wysyłka e-mail nie jest jeszcze skonfigurowana.' });
 
     const { store, next, ticket } = nextTicket();
     const createdAt = new Date().toISOString();
@@ -91,9 +94,6 @@ app.post('/api/requests', upload.array('files', 5), async (req, res) => {
       industry:clean(body.industry), website:clean(body.website), style:clean(body.style), color:clean(body.color),
       extras:clean(body.extras), message, filenames:(req.files||[]).map(f=>f.originalname), createdAt
     };
-    store.requests.unshift(record);
-    store.requests = store.requests.slice(0, 1000);
-    writeStore(store);
 
     const ownerSubject = `${ticket} — ${kind === 'project' ? 'Nowy projekt' : 'Nowe pytanie'} od ${name}`;
     const ownerHtml = `
@@ -107,26 +107,29 @@ app.post('/api/requests', upload.array('files', 5), async (req, res) => {
       ${record.style?`<p><strong>Styl:</strong> ${safeHtml(record.style)}${record.color?` • ${safeHtml(record.color)}`:''}</p>`:''}
       ${record.extras?`<p><strong>Dodatki:</strong> ${safeHtml(record.extras)}</p>`:''}
       <hr><p><strong>Treść:</strong></p><p>${safeHtml(message).replace(/\n/g,'<br>')}</p>
-      <p>Możesz odpowiedzieć bezpośrednio na ten e-mail — odpowiedź trafi do klienta.</p>`;
+      <p>Odpowiedz na tę wiadomość — pole Reply-To jest ustawione na adres klienta.</p>`;
 
-    const attachments = (req.files || []).map(f => ({ filename:f.originalname, content:f.buffer, contentType:f.mimetype }));
-    const customerSubject = kind === 'project' ? `Twój projekt został przyjęty — ${ticket}` : `Twoje pytanie zostało otrzymane — ${ticket}`;
-    const customerHtml = `
-      <p>Dzień dobry ${safeHtml(name)},</p>
-      <p>${kind === 'project' ? 'Twój projekt został przyjęty.' : 'Twoje pytanie zostało otrzymane.'}</p>
-      <p><strong>Numer zgłoszenia: ${ticket}</strong><br>Numer w kolejce: <strong>#${next}</strong></p>
-      <p>Skontaktujemy się z Tobą wkrótce. Jeśli chcesz coś dopisać, po prostu odpowiedz na tę wiadomość i zachowaj numer ${ticket} w temacie.</p>
-      <p>Pozdrawiamy,<br><strong>ProjektKreator.pl</strong></p>`;
+    const attachments = (req.files || []).map(f => ({
+      filename: f.originalname,
+      content: f.buffer.toString('base64')
+    }));
 
-    const [ownerSent, customerSent] = await Promise.all([
-      sendMail({ to:OWNER_EMAIL, subject:ownerSubject, html:ownerHtml, replyTo:email, attachments }).catch(()=>false),
-      sendMail({ to:email, subject:customerSubject, html:customerHtml, replyTo:OWNER_EMAIL }).catch(()=>false)
-    ]);
+    await sendResendEmail({
+      to: OWNER_EMAIL,
+      subject: ownerSubject,
+      html: ownerHtml,
+      replyTo: email,
+      attachments
+    });
 
-    res.status(201).json({ ticket, queueNumber:next, kind, emailSent:ownerSent && customerSent });
+    store.requests.unshift(record);
+    store.requests = store.requests.slice(0, 1000);
+    writeStore(store);
+
+    res.status(201).json({ ticket, queueNumber:next, kind, emailSent:true });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error:'Nie udało się wysłać zgłoszenia. Spróbuj ponownie.' });
+    console.error('Request email error:', error);
+    res.status(500).json({ error:'Nie udało się wysłać wiadomości. Spróbuj ponownie.' });
   }
 });
 
@@ -136,4 +139,4 @@ if (fs.existsSync(dist)) {
   app.get('*', (_, res) => res.sendFile(path.join(dist, 'index.html')));
 }
 
-app.listen(PORT, () => console.log(`ProjektKreator.pl API: http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`ProjektKreator.pl: http://localhost:${PORT}`));
