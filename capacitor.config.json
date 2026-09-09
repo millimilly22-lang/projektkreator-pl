@@ -1,0 +1,6 @@
+{
+  "appId": "pl.projektkreator.app",
+  "appName": "ProjektKreator.pl",
+  "webDir": "dist",
+  "server": { "androidScheme": "https" }
+}
