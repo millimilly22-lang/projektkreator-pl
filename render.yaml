@@ -1,6 +1,20 @@
 services:
   - type: web
     name: projektkreator-pl
-    runtime: static
+    runtime: node
+    plan: free
     buildCommand: npm install && npm run build
-    staticPublishPath: ./dist
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: RESEND_API_KEY
+        sync: false
+      - key: OWNER_EMAIL
+        value: liashany4@gmail.com
+      - key: CONTACT_EMAIL
+        value: liashany4@gmail.com
+      - key: RESEND_FROM
+        value: ProjektKreator.pl <onboarding@resend.dev>
+      - key: PUBLIC_APP_URL
+        sync: false
