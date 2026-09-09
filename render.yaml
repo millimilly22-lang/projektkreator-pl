@@ -1,28 +1,6 @@
 services:
   - type: web
     name: projektkreator-pl
-    runtime: node
-    plan: free
+    runtime: static
     buildCommand: npm install && npm run build
-    startCommand: npm start
-    envVars:
-      - key: NODE_VERSION
-        value: 22
-      - key: PUBLIC_APP_URL
-        sync: false
-      - key: OWNER_EMAIL
-        sync: false
-      - key: CONTACT_EMAIL
-        sync: false
-      - key: SMTP_HOST
-        value: smtp.gmail.com
-      - key: SMTP_PORT
-        value: 465
-      - key: SMTP_SECURE
-        value: true
-      - key: SMTP_USER
-        sync: false
-      - key: SMTP_PASS
-        sync: false
-      - key: SMTP_FROM
-        sync: false
+    staticPublishPath: ./dist
