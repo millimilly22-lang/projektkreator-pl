@@ -1,0 +1,28 @@
+PROJEKTKREATOR.PL — URUCHOMIENIE NA WINDOWS
+
+1) Otwórz folder projektu.
+2) Kliknij pasek adresu w Eksploratorze, wpisz: cmd i Enter.
+3) Wpisz:
+
+   npm install
+   copy .env.example .env
+   npm run dev
+
+4) Otwórz adres pokazany przez Vite, zwykle:
+   http://localhost:5174
+
+E-MAIL:
+- Formularze działają bez panelu admina.
+- Projekt/pytanie jest wysyłane na OWNER_EMAIL.
+- Klient otrzymuje automatyczne potwierdzenie z numerem PK-2026-001 i numerem w kolejce.
+- Aby włączyć prawdziwe e-maile, wpisz w .env Gmail SMTP i Google App Password.
+- Nigdy nie dodawaj .env ani hasła aplikacji do GitHub.
+
+PUBLIKACJA:
+GitHub przechowuje kod. Do obsługi e-mail potrzebujesz hostingu Node, np. Render. Plik render.yaml jest już w projekcie.
+
+ANDROID — później:
+   npm run build
+   npm run cap:add:android
+   npm run cap:sync
+   npm run cap:open:android
