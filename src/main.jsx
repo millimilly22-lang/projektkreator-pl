@@ -1,5 +1,5 @@
 import React from'react';
 import{createRoot}from'react-dom/client';
-import ReferenceFixedApp from'./reference-fix.jsx';
+import ExactApp from'./exact-app.jsx';
 
-createRoot(document.getElementById('root')).render(<ReferenceFixedApp/>);
+createRoot(document.getElementById('root')).render(<ExactApp/>);
