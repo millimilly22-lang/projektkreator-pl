@@ -1,0 +1,93 @@
+/* Strong desktop visual corrections requested after live review */
+:root{
+  --cream:#fffafc;
+  --ink:#4a214f;
+  --text:#6b5b68;
+  --plum:#8f4d8f;
+  --plum2:#b06aa8;
+  --rose:#f5e6ef;
+}
+html,body,#root{width:100%;min-height:100%;background:var(--cream)}
+body{font-family:"Segoe UI",Aptos,Arial,sans-serif;color:var(--ink)}
+h1,h2,h3,h4,.logo b{font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif!important;color:var(--ink)}
+
+/* Use the whole laptop width instead of leaving large empty margins */
+.wrap{width:100%!important;max-width:none!important;padding-left:clamp(28px,4.5vw,88px)!important;padding-right:clamp(28px,4.5vw,88px)!important}
+header{background:rgba(255,250,252,.97)!important}
+.hero{background:linear-gradient(102deg,#fffafc 0 44%,#f3e2ec 44% 100%)!important}
+.heroGrid{grid-template-columns:44% 56%!important;min-height:calc(100vh - 76px)!important}
+.heroCopy{padding-top:clamp(56px,8vh,110px)!important;padding-bottom:54px!important;display:flex;flex-direction:column;justify-content:center}
+.heroCopy h1{font-size:clamp(64px,5.8vw,96px)!important;line-height:.94!important;max-width:760px;margin-bottom:28px!important}
+.heroCopy>p{font-size:clamp(18px,1.25vw,23px)!important;line-height:1.55!important;max-width:760px!important;color:#665563!important}
+.eyebrow{font-size:13px!important;letter-spacing:.2em!important;color:#9a5d94!important}
+.stats{gap:38px!important;margin-top:32px!important}
+.stat b{font-size:28px!important}.stat small{font-size:12px!important}
+
+/* Keep the woman fully readable: face on screen, not cropped away */
+.heroImage{min-height:calc(100vh - 76px)!important;background:#f3e2ec!important}
+.heroImage img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:20% center!important}
+
+/* Flower-white / soft blush visual system */
+.section,.projectsSection,.reviewsSection{background:#fffafc!important}
+.tint,.trustBand,.cta{background:linear-gradient(90deg,#f8edf3,#fffafc)!important}
+.card,.demoCard,.price,.contact form,.contact aside,.testimonials blockquote,.featuredDemo{background:#fff!important;border-color:#ead8e5!important}
+.pill{background:linear-gradient(90deg,#b065a7,#824080)!important}
+.filters button.active{background:linear-gradient(90deg,#b065a7,#824080)!important}
+
+/* Make service cards and typography large enough for a laptop */
+.filters{padding-top:28px!important;padding-bottom:28px!important}
+.filters button{font-size:15px!important;padding:12px 23px!important}
+.cards4{gap:22px!important}
+.card img{height:210px!important}
+.card>div{padding:19px 19px 22px!important}
+.card h3{font-size:28px!important}.card p{font-size:15px!important;line-height:1.55!important;min-height:78px!important}.card strong{font-size:15px!important}
+.section{padding-top:64px!important;padding-bottom:64px!important}
+.sectionHead h2,.reviewsLead h2{font-size:clamp(44px,3.5vw,66px)!important}
+.sectionHead p{font-size:17px!important}
+
+/* Portfolio demos should read as visible websites, not tiny thumbnails */
+.featured{grid-template-columns:58% 42%!important;gap:44px!important}
+.featuredDemo{padding:14px!important}
+.demoGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:26px!important}
+.demoCard{border-radius:16px!important}
+.demoSite .demoTop{height:46px!important;padding:0 16px!important;font-size:10px!important}
+.demoSite .demoTop b{font-size:20px!important}
+.demoSite .demoTop button{font-size:9px!important;padding:7px 11px!important}
+.demoSite .demoHero>div{padding:28px 22px!important}
+.demoSite .demoHero h4{font-size:30px!important;margin:11px 0 8px!important}
+.demoSite .demoHero p{font-size:11px!important;line-height:1.45!important}
+.demoSite .demoHero small{font-size:9px!important}
+.demoSite .demoHero button{font-size:9px!important;padding:8px 12px!important}
+.demoSite .demoHero img{height:250px!important;object-position:center 18%!important}
+.demoStrip span{height:46px!important;font-size:10px!important}
+.demoCardText{padding:20px 22px 24px!important}.demoCardText h3{font-size:29px!important}.demoCardText>b{font-size:14px!important}.demoCardText p{font-size:14px!important;line-height:1.5!important;min-height:auto!important}.demoCardText button{font-size:14px!important}
+
+/* Reviews restored and made prominent */
+.testimonials{gap:24px!important}.testimonials blockquote{padding:26px!important}.testimonials blockquote p{font-size:15px!important;line-height:1.55!important;min-height:110px!important}.reviewPerson b{font-size:14px!important}.reviewPerson small{font-size:11px!important}
+
+/* Desktop-specific full-screen correction */
+@media(min-width:1200px){
+  .nav{padding-left:0!important;padding-right:0!important}
+  .heroCopy{padding-left:0!important}
+  .servicesSection{padding-top:0!important}
+}
+
+/* Tablet/mobile stay readable and keep the woman visible */
+@media(max-width:980px){
+  .wrap{padding-left:24px!important;padding-right:24px!important}
+  .heroGrid{grid-template-columns:1fr!important;min-height:auto!important}
+  .heroCopy{padding:42px 0 30px!important}
+  .heroCopy h1{font-size:clamp(48px,9vw,72px)!important}
+  .heroImage{min-height:420px!important}
+  .heroImage img{object-position:16% center!important}
+  .demoGrid{grid-template-columns:1fr!important}
+  .featured{grid-template-columns:1fr!important}
+}
+@media(max-width:640px){
+  .wrap{padding-left:18px!important;padding-right:18px!important}
+  .heroCopy h1{font-size:48px!important}
+  .heroCopy>p{font-size:17px!important}
+  .heroImage{min-height:330px!important}
+  .card img{height:190px!important}
+  .demoSite .demoHero img{height:200px!important}
+}
