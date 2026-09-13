@@ -17,4 +17,4 @@ services:
       - key: RESEND_FROM
         value: ProjektKreator.pl <onboarding@resend.dev>
       - key: PUBLIC_APP_URL
-        sync: false
+        value: https://projektkreator.pl

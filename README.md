@@ -1,26 +1,18 @@
 # ProjektKreator.pl
 
-Polski serwis sprzedażowy dla usług tworzenia stron internetowych, sklepów, aplikacji, logo, debugowania i testów QA.
+Polski serwis sprzedażowy usług tworzenia stron internetowych, sklepów, aplikacji, logo, debugowania i testów QA. Produkcyjny adres projektu to **https://projektkreator.pl**.
 
 ## Co działa
-- polska strona firmowa i responsywny layout,
-- tylko 3 realizacje: **DocumentFlow**, **Informator Polska** i **FactSphere**,
-- ruchome podglądy realizacji,
-- cennik i usługa **Logo i identyfikacja od 249 PLN**,
-- formularz projektu z orientacyjną wyceną,
-- osobny formularz pytań,
-- lokalnie generowany numer zgłoszenia `PK-2026-...`,
-- po zatwierdzeniu formularza otwiera się gotowa wiadomość e-mail do ProjektKreator.pl,
-- klient sam naciska **Wyślij** w swojej aplikacji pocztowej,
-- brak logowania, panelu admina, SMTP i automatycznego wysyłania wiadomości,
-- Regulamin, Polityka prywatności i Cookies,
-- konfiguracja pod Render Static Site oraz przyszłą aplikację Android/Capacitor.
 
-## Kontakt
-
-Aktualny adres używany przez stronę:
-
-`liashany4@gmail.com`
+- responsywna strona ProjektKreator.pl z cennikiem, formularzem projektu i formularzem kontaktowym,
+- wysyłka formularzy przez istniejący backend Resend,
+- trzy osobne aplikacje React + Vite w `demos/`:
+  - [MODÉA — sklep internetowy](https://projektkreator.pl/portfolio/modea/),
+  - [La Tavola — restauracja](https://projektkreator.pl/portfolio/latavola/),
+  - [NovaBud — firma budowlana](https://projektkreator.pl/portfolio/novabud/),
+- działające podglądy portfolio osadzone w głównej stronie i linki do pełnych wersji demonstracyjnych,
+- lokalne fotografie, responsywny CSS i interakcje JavaScript w każdej aplikacji,
+- `canonical`, Open Graph, `robots.txt`, `sitemap.xml` i dane strukturalne dla domeny ProjektKreator.pl.
 
 ## Start lokalny
 
@@ -29,28 +21,25 @@ npm install
 npm run dev
 ```
 
-Frontend: adres pokazany przez Vite, zwykle `http://localhost:5174`.
+`npm run dev` najpierw buduje trzy dema, a następnie uruchamia Vite oraz backend Express. Główny frontend jest dostępny zwykle pod `http://localhost:5173`.
 
-## Jak działa kontakt
+## Build produkcyjny
 
-1. Klient wypełnia formularz projektu albo pytania.
-2. Strona tworzy lokalny numer zgłoszenia.
-3. Klient widzi ekran **Wiadomość gotowa**.
-4. Po kliknięciu **Otwórz e-mail** uruchamia się jego aplikacja pocztowa z gotowym odbiorcą, tematem i treścią.
-5. Klient sprawdza wiadomość, ręcznie dołącza pliki jeśli są potrzebne i naciska **Wyślij**.
-6. Odpowiadasz normalnie ze swojej skrzynki Gmail.
+```bash
+npm run build
+```
 
-> Ważne: zwykły `mailto:` nie potrafi automatycznie dołączyć plików i strona nie może potwierdzić, że klient rzeczywiście nacisnął „Wyślij”.
+Skrypt buduje każdą aplikację Vite z właściwym `base` (`/portfolio/modea/`, `/portfolio/latavola/`, `/portfolio/novabud/`), kopiuje jej wynik do `public/portfolio/`, a potem buduje główny frontend. Na końcu `scripts/check-build.mjs` sprawdza canonical URLs, assety, zdjęcia, sitemapę, robots i brak starych demonstracji.
 
-## Render
-
-Projekt nie potrzebuje już backendu ani zmiennych SMTP. Publikuj go jako **Static Site**:
+Render używa:
 
 - Build Command: `npm install && npm run build`
-- Publish Directory: `dist`
+- Start Command: `npm start`
 
-Nie potrzebujesz `SMTP_USER`, `SMTP_PASS`, `OWNER_EMAIL` ani innych danych pocztowych na Render.
+Nie zmieniaj rekordów DNS w kodzie. Po podpięciu domeny w panelu Render aplikacja korzysta z `https://projektkreator.pl` jako adresu produkcyjnego.
 
-## Ważne przed publikacją
+## Kontakt
 
-Uzupełnij pełne dane firmy, NIP, adres oraz sprawdź treść Regulaminu i Polityki prywatności pod kątem swojej działalności.
+Aktualny adres używany przez formularze: `liashany4@gmail.com`.
+
+Przed publikacją uzupełnij pełne dane firmy, NIP, adres oraz treść dokumentów prawnych.

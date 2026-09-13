@@ -77,3 +77,8 @@ vite.config.ts.timestamp-*
 # ProjektKreator runtime data
 server/data/
 server/uploads/
+
+# Generated portfolio apps, rebuilt by the root build
+/public/portfolio/modea/
+/public/portfolio/latavola/
+/public/portfolio/novabud/
