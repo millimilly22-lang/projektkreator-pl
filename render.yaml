@@ -1,10 +1,6 @@
 services:
   - type: web
     name: projektkreator-pl
-    runtime: node
-    plan: free
-    buildCommand: echo "No build required"
-    startCommand: npm start
-    envVars:
-      - key: NODE_VERSION
-        value: 22
+    runtime: static
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
