@@ -1,38 +1,46 @@
 <!doctype html>
 <html lang="pl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0f172a" />
-  <meta name="description" content="ProjektKreator.pl — strony internetowe, sklepy, aplikacje, logo, debugowanie i testowanie dla firm." />
-  <meta name="keywords" content="strony internetowe, tworzenie stron, sklep internetowy, aplikacja webowa, logo dla firmy, debugowanie, testowanie QA, Polska" />
-  <link rel="canonical" href="https://projektkreator.pl/" />
-  <meta property="og:title" content="ProjektKreator.pl — strony, sklepy i aplikacje dla firm" />
-  <meta property="og:description" content="Tworzymy strony, sklepy i aplikacje dla Twojej firmy. Jasny cennik, formularz projektu i automatyczne potwierdzenie e-mail." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://projektkreator.pl/" />
-  <meta property="og:site_name" content="ProjektKreator.pl" />
-  <meta property="og:locale" content="pl_PL" />
-  <meta property="og:image" content="https://projektkreator.pl/projektkreator-logo.webp" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="ProjektKreator.pl — strony, sklepy i aplikacje dla firm" />
-  <meta name="twitter:description" content="Tworzymy strony, sklepy i aplikacje dla Twojej firmy." />
-  <meta name="twitter:image" content="https://projektkreator.pl/projektkreator-logo.webp" />
-  <meta name="robots" content="index,follow" />
-  <link rel="icon" href="/projektkreator-logo.webp" />
-  <title>ProjektKreator.pl — strony, sklepy i aplikacje dla firm</title>
-  <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "ProfessionalService",
-      "@id": "https://projektkreator.pl/#organization",
-      "name": "ProjektKreator.pl",
-      "url": "https://projektkreator.pl/",
-      "email": "mailto:liashany4@gmail.com",
-      "areaServed": {"@type": "Country", "name": "Polska"},
-      "serviceType": ["Tworzenie stron internetowych", "Sklepy internetowe", "Aplikacje webowe", "Testowanie QA"]
-    }
-  </script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="ProjektKreator.pl — strony internetowe, sklepy online i aplikacje webowe.">
+<meta name="theme-color" content="#f6edf3">
+<title>ProjektKreator.pl</title>
+<link rel="stylesheet" href="style.css">
 </head>
-<body><div id="root"></div><script type="module" src="/src/main.jsx"></script></body>
+<body>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#services" onclick="showPage('services'); return false;" aria-label="ProjektKreator.pl">
+      <span class="logo-mark"></span>
+      <span class="logo-text"><strong>ProjektKreator.pl</strong><span>STRONY • SKLEPY • APLIKACJE</span></span>
+    </a>
+    <button class="mobile-toggle" aria-label="Menu">☰</button>
+    <nav class="menu">
+      <a href="#services" data-page="services" onclick="showPage('services'); return false;">Usługi</a>
+      <a href="#portfolio" data-page="portfolio" onclick="showPage('portfolio'); return false;">Nasze realizacje</a>
+      <a href="#pricing" data-page="pricing" onclick="showPage('pricing'); return false;">Cennik</a>
+      <a href="#contact" data-page="contact" onclick="showPage('contact'); return false;">Napisz do nas</a>
+    </nav>
+    <a class="btn" href="#contact" onclick="showPage('contact'); return false;">Rozpocznij projekt <span>→</span></a>
+  </div>
+</header>
+<main id="app"></main>
+<footer class="footer">
+  <div class="container footer-grid">
+    <a class="logo" href="#services" onclick="showPage('services'); return false;">
+      <span class="logo-mark"></span>
+      <span class="logo-text"><strong>ProjektKreator.pl</strong><span>STRONY • SKLEPY • APLIKACJE</span></span>
+    </a>
+    <div class="footer-links">
+      <a href="#services" onclick="showPage('services'); return false;">Usługi</a>
+      <a href="#portfolio" onclick="showPage('portfolio'); return false;">Nasze realizacje</a>
+      <a href="#pricing" onclick="showPage('pricing'); return false;">Cennik</a>
+      <a href="#contact" onclick="showPage('contact'); return false;">Napisz do nas</a>
+    </div>
+    <div class="social"><span>●</span><span>◎</span><span>in</span><span>▶</span></div>
+  </div>
+</footer>
+<script src="script.js"></script>
+</body>
 </html>
