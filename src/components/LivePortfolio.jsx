@@ -27,17 +27,16 @@ export function LiveWebsitePreview({ project, variant = 'large' }) {
 
 export function MovingPortfolio() {
   const [index, setIndex] = useState(0);
-  const [autoplay, setAutoplay] = useState(() => !window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const [hovered, setHovered] = useState(false);
+  const [autoplay, setAutoplay] = useState(true);
   const project = projects[index];
   useEffect(() => {
-    if (!autoplay || hovered) return;
-    const timer = setInterval(() => setIndex(i => (i + 1) % projects.length), 12000);
+    if (!autoplay) return;
+    const timer = setInterval(() => setIndex(i => (i + 1) % projects.length), 9000);
     return () => clearInterval(timer);
-  }, [autoplay, hovered]);
-  function move(delta) { setIndex(i => (i + delta + projects.length) % projects.length); setAutoplay(false); }
-  return <div className="live-portfolio" role="region" aria-label="Działające realizacje ProjektKreator.pl" aria-roledescription="karuzela" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)} onFocusCapture={() => setAutoplay(false)}>
-    <div className="portfolio-controls"><div className="portfolio-tabs" aria-label="Wybierz realizację">{projects.map((p,i) => <button key={p.id} aria-pressed={i === index} className={i === index ? 'active' : ''} onClick={() => { setIndex(i); setAutoplay(false); }}><span>0{i + 1}</span>{p.name}</button>)}</div><div className="portfolio-arrows"><button onClick={() => move(-1)} aria-label="Poprzednia realizacja"><ChevronLeft size={20}/></button><button onClick={() => setAutoplay(value => !value)} aria-label={autoplay ? 'Zatrzymaj automatyczne przewijanie' : 'Włącz automatyczne przewijanie'}>{autoplay ? <Pause size={16}/> : <Play size={16}/>}</button><button onClick={() => move(1)} aria-label="Następna realizacja"><ChevronRight size={20}/></button></div></div>
+  }, [autoplay]);
+  function move(delta) { setIndex(i => (i + delta + projects.length) % projects.length); }
+  return <div className="live-portfolio" role="region" aria-label="Działające realizacje ProjektKreator.pl" aria-roledescription="karuzela">
+    <div className="portfolio-controls"><div className="portfolio-tabs" aria-label="Wybierz realizację">{projects.map((p,i) => <button key={p.id} aria-pressed={i === index} className={i === index ? 'active' : ''} onClick={() => setIndex(i)}><span>0{i + 1}</span>{p.name}</button>)}</div><div className="portfolio-arrows"><button onClick={() => move(-1)} aria-label="Poprzednia realizacja"><ChevronLeft size={20}/></button><button onClick={() => setAutoplay(value => !value)} aria-label={autoplay ? 'Zatrzymaj automatyczne przewijanie' : 'Włącz automatyczne przewijanie'}>{autoplay ? <Pause size={16}/> : <Play size={16}/>}</button><button onClick={() => move(1)} aria-label="Następna realizacja"><ChevronRight size={20}/></button></div></div>
     <LiveWebsitePreview project={project}/>
     <div className="portfolio-description" aria-live={autoplay ? 'off' : 'polite'}><div><span>{project.type} · {index + 1} / {projects.length}</span><h3>{project.name}</h3><p>{project.desc}</p></div><a href={project.url} target="_blank" rel="noreferrer">Otwórz pełne demo <ExternalLink size={18}/></a></div>
   </div>;
