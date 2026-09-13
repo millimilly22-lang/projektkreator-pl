@@ -210,7 +210,7 @@ const demoData = {
     type:'Sklep internetowy',
     tagline:'Styl w Twojej codzienności',
     sub:'Moda, która podkreśla Ciebie.',
-    image:'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1100&q=88',
+    image:'https://images.unsplash.com/photo-1612721038966-00837bff2755?auto=format&fit=crop&w=1200&q=88',
     accent:'#9a5a92',
     light:'#f5eef2'
   },
@@ -322,7 +322,7 @@ function Portfolio({go}) {
         <div className="eyebrow">Wyróżniona realizacja</div>
         <div className="featured">
           <div className="featuredVisual">
-            <img src={assets.portfolio_featured} alt="MODÉA — pełny podgląd sklepu"/>
+            <DemoWebsite id="modea"/>
           </div>
           <div>
             <h2>MODÉA</h2>
