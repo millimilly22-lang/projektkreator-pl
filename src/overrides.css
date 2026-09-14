@@ -1,4 +1,4 @@
-/* Strong desktop visual corrections requested after live review */
+/* Final image and desktop sizing pass after live review */
 :root{
   --cream:#fffafc;
   --ink:#4a214f;
@@ -11,83 +11,100 @@ html,body,#root{width:100%;min-height:100%;background:var(--cream)}
 body{font-family:"Segoe UI",Aptos,Arial,sans-serif;color:var(--ink)}
 h1,h2,h3,h4,.logo b{font-family:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif!important;color:var(--ink)}
 
-/* Use the whole laptop width instead of leaving large empty margins */
-.wrap{width:100%!important;max-width:none!important;padding-left:clamp(28px,4.5vw,88px)!important;padding-right:clamp(28px,4.5vw,88px)!important}
+/* Balanced desktop width: fill the laptop without stretching content edge-to-edge */
+.siteWrap{width:calc(100% - 48px)!important;max-width:1580px!important;margin-left:auto!important;margin-right:auto!important}
 header{background:rgba(255,250,252,.97)!important}
-.hero{background:linear-gradient(102deg,#fffafc 0 44%,#f3e2ec 44% 100%)!important}
-.heroGrid{grid-template-columns:44% 56%!important;min-height:calc(100vh - 76px)!important}
-.heroCopy{padding-top:clamp(56px,8vh,110px)!important;padding-bottom:54px!important;display:flex;flex-direction:column;justify-content:center}
-.heroCopy h1{font-size:clamp(64px,5.8vw,96px)!important;line-height:.94!important;max-width:760px;margin-bottom:28px!important}
-.heroCopy>p{font-size:clamp(18px,1.25vw,23px)!important;line-height:1.55!important;max-width:760px!important;color:#665563!important}
-.eyebrow{font-size:13px!important;letter-spacing:.2em!important;color:#9a5d94!important}
-.stats{gap:38px!important;margin-top:32px!important}
-.stat b{font-size:28px!important}.stat small{font-size:12px!important}
+.hero{background:linear-gradient(102deg,#fffafc 0 50%,#f4e7ef 50% 100%)!important}
+.heroGrid{grid-template-columns:50% 50%!important;min-height:360px!important;align-items:center!important}
+.heroCopy{padding:42px 40px 38px 0!important;display:flex;flex-direction:column;justify-content:center}
+.heroCopy h1{font-size:clamp(52px,4.4vw,72px)!important;line-height:.96!important;max-width:720px;margin-bottom:20px!important}
+.heroCopy>p{font-size:clamp(16px,1.05vw,19px)!important;line-height:1.5!important;max-width:680px!important;color:#665563!important}
+.eyebrow{font-size:12px!important;letter-spacing:.19em!important;color:#9a5d94!important}
+.stats{gap:30px!important;margin-top:20px!important}
+.stat b{font-size:24px!important}.stat small{font-size:11px!important}
 
-/* Keep the woman fully readable: face on screen, not cropped away */
-.heroImage{min-height:calc(100vh - 76px)!important;background:#f3e2ec!important}
-.heroImage img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:20% center!important}
+/* IMPORTANT: hero photos are smaller and fully visible. No face/body cropping. */
+.heroImage{min-height:0!important;height:auto!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:24px!important;background:#f4e7ef!important}
+.heroImage img,.servicesHero .heroImage img,.portfolioHero .heroImage img,.pricingHero .heroImage img,.contactHero .heroImage img{width:100%!important;max-width:700px!important;height:300px!important;object-fit:contain!important;object-position:center!important;border-radius:16px!important;background:#fff!important;box-shadow:0 12px 30px rgba(78,39,76,.10)!important}
 
-/* Flower-white / soft blush visual system */
+/* Consistent flower-white / blush palette */
 .section,.projectsSection,.reviewsSection{background:#fffafc!important}
 .tint,.trustBand,.cta{background:linear-gradient(90deg,#f8edf3,#fffafc)!important}
-.card,.demoCard,.price,.contact form,.contact aside,.testimonials blockquote,.featuredDemo{background:#fff!important;border-color:#ead8e5!important}
+.card,.serviceCard,.demoCard,.price,.contact form,.contact aside,.testimonials blockquote,.featuredDemo{background:#fff!important;border-color:#ead8e5!important}
 .pill{background:linear-gradient(90deg,#b065a7,#824080)!important}
 .filters button.active{background:linear-gradient(90deg,#b065a7,#824080)!important}
 
-/* Make service cards and typography large enough for a laptop */
-.filters{padding-top:28px!important;padding-bottom:28px!important}
-.filters button{font-size:15px!important;padding:12px 23px!important}
-.cards4{gap:22px!important}
-.card img{height:210px!important}
-.card>div{padding:19px 19px 22px!important}
-.card h3{font-size:28px!important}.card p{font-size:15px!important;line-height:1.55!important;min-height:78px!important}.card strong{font-size:15px!important}
-.section{padding-top:64px!important;padding-bottom:64px!important}
-.sectionHead h2,.reviewsLead h2{font-size:clamp(44px,3.5vw,66px)!important}
-.sectionHead p{font-size:17px!important}
+/* Service imagery reduced and kept fully visible */
+.filters{padding-top:22px!important;padding-bottom:22px!important}
+.filters button{font-size:14px!important;padding:10px 20px!important}
+.serviceGrid{gap:18px!important}
+.serviceCard img{height:145px!important;object-fit:contain!important;object-position:center!important;padding:8px!important;background:#fbf6f9!important}
+.serviceBody{padding:16px 17px 18px!important}
+.serviceCard h3{font-size:25px!important}.serviceCard p{font-size:13px!important;line-height:1.5!important;min-height:58px!important}.serviceBottom strong{font-size:13px!important}
+.section{padding-top:54px!important;padding-bottom:54px!important}
+.sectionHead h2,.reviewsLead h2{font-size:clamp(40px,3vw,56px)!important}
+.sectionHead p{font-size:15px!important}
 
-/* Portfolio demos should read as visible websites, not tiny thumbnails */
-.featured{grid-template-columns:58% 42%!important;gap:44px!important}
-.featuredDemo{padding:14px!important}
-.demoGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:26px!important}
-.demoCard{border-radius:16px!important}
-.demoSite .demoTop{height:46px!important;padding:0 16px!important;font-size:10px!important}
-.demoSite .demoTop b{font-size:20px!important}
-.demoSite .demoTop button{font-size:9px!important;padding:7px 11px!important}
-.demoSite .demoHero>div{padding:28px 22px!important}
-.demoSite .demoHero h4{font-size:30px!important;margin:11px 0 8px!important}
-.demoSite .demoHero p{font-size:11px!important;line-height:1.45!important}
-.demoSite .demoHero small{font-size:9px!important}
-.demoSite .demoHero button{font-size:9px!important;padding:8px 12px!important}
-.demoSite .demoHero img{height:250px!important;object-position:center 18%!important}
-.demoStrip span{height:46px!important;font-size:10px!important}
-.demoCardText{padding:20px 22px 24px!important}.demoCardText h3{font-size:29px!important}.demoCardText>b{font-size:14px!important}.demoCardText p{font-size:14px!important;line-height:1.5!important;min-height:auto!important}.demoCardText button{font-size:14px!important}
+/* Featured portfolio: the demo is smaller and every image stays inside its frame */
+.featured{grid-template-columns:54% 46%!important;gap:34px!important;align-items:center!important}
+.featuredDemo{padding:10px!important;max-width:760px!important;margin:auto!important}
+.demoPreview{padding:8px!important;background:#f7f0f5!important}
 
-/* Reviews restored and made prominent */
-.testimonials{gap:24px!important}.testimonials blockquote{padding:26px!important}.testimonials blockquote p{font-size:15px!important;line-height:1.55!important;min-height:110px!important}.reviewPerson b{font-size:14px!important}.reviewPerson small{font-size:11px!important}
+/* Four compact demos across a normal laptop, like the approved reference */
+.demoGrid{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:18px!important}
+.demoCard{border-radius:14px!important;overflow:hidden!important}
+.demoCardText{padding:15px 16px 18px!important}
+.demoCardText h3{font-size:24px!important}.demoCardText>b{font-size:12px!important}.demoCardText p{font-size:12px!important;line-height:1.45!important;min-height:55px!important}.demoCardText button{font-size:12px!important}
 
-/* Desktop-specific full-screen correction */
-@media(min-width:1200px){
-  .nav{padding-left:0!important;padding-right:0!important}
-  .heroCopy{padding-left:0!important}
-  .servicesSection{padding-top:0!important}
+/* Mini website previews: smaller image area, contain instead of crop */
+.demoNav{height:34px!important;padding:0 9px!important}
+.demoNav b{font-size:13px!important}.demoNav>div{font-size:6px!important}.demoNav button{font-size:6px!important;padding:5px 7px!important}
+.demoHeroCopy{padding:14px 9px!important}
+.demoHero h4{font-size:17px!important;margin:7px 0 5px!important}
+.demoHero p{font-size:7px!important;line-height:1.35!important;margin-bottom:7px!important}
+.demoHero small{font-size:6px!important}.demoHero button{font-size:6px!important;padding:5px 7px!important}
+.demoHero img{height:110px!important;object-fit:contain!important;object-position:center!important;background:#fff!important;padding:4px!important}
+.demoFeatureRow{padding:7px!important;gap:4px!important}.demoFeatureRow>div{padding:6px!important}
+.demoBottom{padding:0 7px 8px!important}.demoBlocks i{height:28px!important}
+
+/* Large demo modal also keeps the whole image visible */
+.demoSite.large .demoHero img{height:235px!important;object-fit:contain!important;object-position:center!important;background:#fff!important;padding:8px!important}
+.demoSite.large .demoHeroCopy{padding:32px 26px!important}
+.demoSite.large .demoHero h4{font-size:39px!important}
+.demoSite.large .demoHero p{font-size:13px!important}
+.demoSite.large .demoFeatureRow{padding:14px!important}.demoSite.large .demoBlocks i{height:78px!important}
+
+/* Reviews remain visible and balanced */
+.testimonials{gap:20px!important}.testimonials blockquote{padding:21px!important}.testimonials blockquote p{font-size:13px!important;line-height:1.5!important;min-height:86px!important}.reviewPerson b{font-size:13px!important}.reviewPerson small{font-size:10px!important}
+
+.note{height:190px!important;object-fit:contain!important;background:#fbf6f9!important;padding:8px!important}
+
+@media(max-width:1250px){
+  .siteWrap{width:calc(100% - 40px)!important}
+  .heroGrid{grid-template-columns:50% 50%!important;min-height:330px!important}
+  .heroImage img,.servicesHero .heroImage img,.portfolioHero .heroImage img,.pricingHero .heroImage img,.contactHero .heroImage img{height:270px!important}
+  .demoGrid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
-/* Tablet/mobile stay readable and keep the woman visible */
-@media(max-width:980px){
-  .wrap{padding-left:24px!important;padding-right:24px!important}
+@media(max-width:900px){
+  .siteWrap{width:calc(100% - 32px)!important}
   .heroGrid{grid-template-columns:1fr!important;min-height:auto!important}
-  .heroCopy{padding:42px 0 30px!important}
-  .heroCopy h1{font-size:clamp(48px,9vw,72px)!important}
-  .heroImage{min-height:420px!important}
-  .heroImage img{object-position:16% center!important}
-  .demoGrid{grid-template-columns:1fr!important}
+  .heroCopy{padding:34px 0 24px!important}
+  .heroCopy h1{font-size:clamp(46px,8vw,66px)!important}
+  .heroImage{padding:10px 0 24px!important;background:transparent!important}
+  .heroImage img,.servicesHero .heroImage img,.portfolioHero .heroImage img,.pricingHero .heroImage img,.contactHero .heroImage img{width:100%!important;height:250px!important;max-width:680px!important}
   .featured{grid-template-columns:1fr!important}
+  .demoGrid{grid-template-columns:1fr 1fr!important}
 }
+
 @media(max-width:640px){
-  .wrap{padding-left:18px!important;padding-right:18px!important}
-  .heroCopy h1{font-size:48px!important}
-  .heroCopy>p{font-size:17px!important}
-  .heroImage{min-height:330px!important}
-  .card img{height:190px!important}
-  .demoSite .demoHero img{height:200px!important}
+  .siteWrap{width:calc(100% - 28px)!important}
+  .heroCopy h1{font-size:46px!important}
+  .heroCopy>p{font-size:16px!important}
+  .heroImage img,.servicesHero .heroImage img,.portfolioHero .heroImage img,.pricingHero .heroImage img,.contactHero .heroImage img{height:220px!important}
+  .serviceCard img{height:150px!important}
+  .demoGrid{grid-template-columns:1fr!important}
+  .demoHero img{height:130px!important}
+  .demoSite.large .demoHero{grid-template-columns:1fr!important}
+  .demoSite.large .demoHero img{height:220px!important}
 }
