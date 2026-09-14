@@ -1,6 +1,6 @@
 {
   "project": "ProjektKreator.pl",
-  "version": "blueprint-v2-2026-09-14",
-  "expected_main_commit": "after-d99ec810",
-  "note": "If this file is visible on the live domain, the new React/Vite deployment is active."
+  "version": "approved-blueprint-v5-2026-09-14",
+  "expected_main_commit": "latest",
+  "note": "Exact React/Vite rebuild from the approved blueprint image with live HTML demos."
 }
