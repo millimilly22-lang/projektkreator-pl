@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: projektkreator-pl
+    name: projektkreator-pl-web
     runtime: node
     buildCommand: rm -rf dist node_modules/.vite && npm install && npm run build
     startCommand: npm start
