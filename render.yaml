@@ -2,7 +2,6 @@ services:
   - type: web
     name: projektkreator-pl
     runtime: node
-    plan: free
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
