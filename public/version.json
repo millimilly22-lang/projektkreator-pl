@@ -1,6 +1,6 @@
 {
   "project": "ProjektKreator.pl",
-  "version": "approved-blueprint-v5-2026-09-14",
-  "expected_main_commit": "latest",
-  "note": "Exact React/Vite rebuild from the approved blueprint image with live HTML demos."
+  "version": "approved-react-vite-v6-2026-09-14",
+  "expected_main_commit": "v6-main",
+  "note": "React + Vite production build using the approved multi-page blueprint with live React demo routes."
 }
